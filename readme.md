@@ -1,4 +1,4 @@
-# ETL Task Documentation
+# Extract Transform Load (ETL)
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -151,12 +151,12 @@ In this task two datasets are being used, crowdfunding.xlsx and contacts.csv.
 ## Work Flow
 **1.Data Loading**
 Initially, the data is loaded from the S3 bucket into the Redshift tables.This is carried out to enhance the efficiency of data retrieval, as Redshift demonstrates high performance when querying large datasets.
-![Data in s3](.\images\raw_data_s3.png)
+![Data in s3](images\raw_data_s3.png)
 
  SQL queries are used to create respective table as per each files and to copy the data from the csv files in s3 to redshift. Tables in the redshift are then read in dataframes for further mainupulations and analysis.
- ![Crowdfunding table in Redshift](.\images\redshift_table.png)
+ ![Crowdfunding table in Redshift](images\redshift_table.png)
 
- ![Contacts table in Redshift](.\images\redshift_contacts.png)
+ ![Contacts table in Redshift](images\redshift_contacts.png)
 
 
 **2. Data Cleaning And Transformation**
@@ -164,36 +164,36 @@ After examining the data for further transformation and manipulation, the follow
 
 - None of the columns of both files contained null values
 
-![Test: Presence of null value in crowdfunding.xlsx](.\images\null_value_crowdfunding.png)
+![Test: Presence of null value in crowdfunding.xlsx](images\null_value_crowdfunding.png)
 
-![Test: Presence of null value in crontacts.xlsx](.\images\null_value_contacts.png)
+![Test: Presence of null value in crontacts.xlsx](images\null_value_contacts.png)
 
 - Handling contact information in a separate CSV file was seen as a bit of a hassle for smooth operations.
 
 - Values of the fields "launched_at" and "deadline" were in in Unix epoch time, which required to be converted to human-readable date and time format
 
-!["launched_at" and "deadline" fields before transformation](.\images\uncleaned_date.png)
+!["launched_at" and "deadline" fields before transformation](images\uncleaned_date.png)
 
 - the "goal" and "pledged" fields contained amounts in different currencies, standardization was required
 
-!["goal" and "pledged" fields before transformation](.\images\uncleaned_currency.png)
+!["goal" and "pledged" fields before transformation](images\uncleaned_currency.png)
 
 - the combination of "category" and "subcategory" in a single column was a readability challenges
 
-!["category & subcatogry" fields before transformation](.\images\uncleaned_currency.png)
+!["category & subcatogry" fields before transformation](images\uncleaned_currency.png)
 
 All these above mentioned  issues were addressed taking following measures.
 - the first_name, the last_name, and the email information of each crowdfunding pitch were merged to the crowdfunding_df using contact_is as the key to merge
 
 - the Unix epoch time format was converted into converted to human-readable date and time format i.e "datetime" format.
 
-!["launched_at" and "deadline" fields after transformation](.\images\cleaned_date.png)
+!["launched_at" and "deadline" fields after transformation](images\cleaned_date.png)
 
 - with the help of row's currency column as the lead, all the amount in the goal and the pledge columns were converted to USD as a part of standarization
-!["goal" and "pledged" fields after transformation](.\images\cleaned_currency.png)
+!["goal" and "pledged" fields after transformation](images\cleaned_currency.png)
 
 - category and the sub category were splited into different columns to enchance readability
-!["category & subcatogry" fields after transformation](.\images\cleaned_category.png)
+!["category & subcatogry" fields after transformation](images\cleaned_category.png)
 
 - finally all the unrequired fields 'cf_id', 'contact_id" 'currency', 'category & sub-category', 'staff_pick', 'spotlight' were droped
 
@@ -201,14 +201,14 @@ All these above mentioned  issues were addressed taking following measures.
 
 - columns were rearranged to increase efficiency
 
- ![Cleaned and transformed data](.\images\final_cleaned_dataset.png)
+ ![Cleaned and transformed data](images\final_cleaned_dataset.png)
 
 **3. Data Load**
 As a final step the cleaned data were categorised on the basis of the year and outcomes and exported as csv and uploaded to the s3 bucket. For efficient and easy retrival of the data the csvs are then loaded to the athena tables.
 
- ![cleaned files in s3](.\images\s3_clean_data.png)
+ ![cleaned files in s3](images\s3_clean_data.png)
 
-  ![Tables in athena ](.\images\athena.png)
+  ![Tables in athena ](images\athena.png)
 
 
 ## Future Enhancements
