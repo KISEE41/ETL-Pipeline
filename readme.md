@@ -2,23 +2,29 @@
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Tools Used](#tools-used)
-3. [Libraries Used](#libraries-used)
-3. [Process Overview](#process-overview)
-4. [Function Overview](#process-overview)
-4. [Step-by-Step Guide](#step-by-step-guide)
+2. [Pipeline Architecture](#eTL-pipeline-architecture)
+3. [Tools Used](#tools-used)
+4. [Libraries Used](#libraries-used)
+5. [Process Overview](#process-overview)
+6. [Function Overview](#process-overview)
+7. [Step-by-Step Guide](#step-by-step-guide)
    - [Setting Up Environment](#setting-up-environment)
    - [Installing Requirements](#installing-requirements)
    - [Executing the Script](#executing-the-script)
-5. [Data Schema](#data-schema)
-6. [Work Flow](#work-flow)
-7. [Future Enhancement](#future-enhancement)
-8. [Conclusion](#conclusion)
+8. [Data Schema](#data-schema)
+9. [Work Flow](#work-flow)
+10. [Future Enhancement](#future-enhancement)
+11. [Conclusion](#conclusion)
 
 ## Introduction
 ETL, or Extract, Transform, Load, is a crucial process in data management that involves gathering data from various sources such as data warehouses and data lakes in its raw format i.e., extraction. Then, this data undergoes cleaning and transformation to derive valuable and actionable insights i.e., transformation. And finally, the processed data is stored in databases for future utilization which stands for load. This script is designed to facilitate the extraction, cleaning, transformation, and loading (ETL) of crowdfunding data stored in Amazon Redshift. It connects to the Redshift cluster, executes SQL queries to extract data from CSV files stored in an S3 bucket, performs data cleaning and transformation operations, and finally loads the transformed data back into Amazon S3 and then to Amazon Athena.
 
 In this particular ETL task, a sample of crowdfunding dataset is used.
+
+## Pipeline Architecture
+![Pipeline Architecture](images/architecture.png)
+
+The architecture follows a typical Extract, Transform, Load (ETL) pattern, where data is extracted from a source stored it to s3 and then to redshift for efficient and easy processing , transformed to meet specific requirements, and then loaded into s3 for the availability and then to athena for easy retrival and quering.AWS services like S3, Redshift, and Athena are leveraged for their scalability, reliability, and ease of use, allowing for a robust and efficient data processing pipeline.
 
 ## Tools Used
 - **Programming Language**: Python
@@ -32,9 +38,14 @@ In this particular ETL task, a sample of crowdfunding dataset is used.
 
 
 ## Process Overview
-**1. Setting Up Environment**: Create a virtual environment to manage  dependencies.
-**2. Installing Requirements**: Install necessary Python packages using a requirements file.
-**3. Executing the Script**: Run the Python script to extract, transform, and load the data.
+**1. Setting Up Environment**:
+Create a virtual environment to manage  dependencies.
+
+**2. Installing Requirements**:
+Install necessary Python packages using a requirements file.
+
+**3. Executing the Script**:
+Run the Python script to extract, transform, and load the data.
 
 ## Function Overview
 **1. Data Extraction Functions**
@@ -65,35 +76,37 @@ In this particular ETL task, a sample of crowdfunding dataset is used.
 ## Step-by-Step Guide
 **1. Setting Up Environment**
 - Create a virtual environment using the following command:
-```python-m venv venv```
+  ```
+    python-m venv venv
+  ```
 
 **2. Installing Requirements**
 - Activate the virtual environment:
     - On Windows:
-    ```
-      venv\Scripts\activate
-    ```
+      ```
+        venv\Scripts\activate
+      ```
 
     - On macOS and Linux:
-    ```
-      source venv/bin/activate
-    ```
+      ```
+        source venv/bin/activate
+      ```
 
 - Install the required packages using the provided requirements file :
-```
-  pip install -r requirements.txt
-```
+  ```
+    pip install -r requirements.txt
+  ```
 
 **3. Executing the Script**
 - Run the Python script main.py to perform ETL of data:
-```python
-  python main.py
-```
+  ```python
+    python main.py
+  ```
 
 - For more infromation and help, use the -h or --help option
-```python
-  python main.py -h
-```
+  ```python
+    python main.py -h
+  ```
 
 ## Data Schema
 In this task two datasets are being used, crowdfunding.xlsx and contacts.csv.
